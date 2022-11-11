@@ -2,26 +2,35 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\Category;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Shop extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
+        /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'shop_name',
         'email',
         'password',
+        'city',
+        'phone_number',
+        'wallet_account',
+        'address',
+        'category_id',
+        'open_time',
+        'close_time',
+        'profile_photo'
     ];
 
     /**
@@ -34,18 +43,21 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+
+
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 
 }
