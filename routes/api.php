@@ -19,4 +19,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/login', [AuthController::class , 'userLogin']);
+
+// ---------------------- public routes ------------------------
+Route::post('/userLogin', [AuthController::class , 'userLogin']);
+Route::post('/userRegister', [AuthController::class , 'userRegister']);
+
+Route::post('/shopLogin', [AuthController::class , 'shopLogin']);
+Route::post('/shopRegister', [AuthController::class , 'shopRegister']);
+
+// --------------------- authenticated routes ------------------

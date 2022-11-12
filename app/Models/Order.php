@@ -13,6 +13,13 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'shop_id',
+        'delivery_info_id',
+        'price',
+        'status',
+    ];
     public function deliveryInfo()
     {
         return $this->hasOne(DeliveryInfo::class);

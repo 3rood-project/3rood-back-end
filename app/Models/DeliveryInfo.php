@@ -10,6 +10,13 @@ class DeliveryInfo extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'city',
+        'address',
+        'phone_number',
+        'note',
+    ];
     public function order()
     {
         return $this->hasOne(Order::class);
