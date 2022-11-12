@@ -11,6 +11,16 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'shop_id',
+        'price',
+        'Description',
+        'product_photo',
+        'tag',
+        'Quantity',
+        'duo_to',
+    ];
     public function shop()
     {
         return $this->belongsTo(Shop::class);

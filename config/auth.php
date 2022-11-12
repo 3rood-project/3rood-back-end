@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Shop;
+
 return [
 
     /*
@@ -40,6 +42,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'shop' => [
+            'driver' => 'session',
+            'provider' => 'shops',
+        ],
+
     ],
 
     /*
@@ -63,6 +70,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'shops' => [
+            'driver' => 'eloquent',
+            'model' => Shop::class,
         ],
 
         // 'users' => [
