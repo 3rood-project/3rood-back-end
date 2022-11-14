@@ -38,10 +38,12 @@ Route::get('/allShops/{name}/{id}', [PublicShopController::class , 'showProductD
 
 // --------------------- authenticated routes ------------------
 Route::middleware('auth:sanctum')->group(function (){
+    // profile
     Route::get('/profile', [UserProfileController::class , 'showUserProfile']);
     Route::put('/profile/edit', [UserProfileController::class , 'editUserProfile']);
     Route::put('/userChangePass', [UserProfileController::class , 'changeUserPassword']);
 
+    // order
     Route::get('/order/{order}', [UserProfileController::class , 'showUserOrderDetails']);
 }
 );

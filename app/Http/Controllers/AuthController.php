@@ -40,11 +40,11 @@ class AuthController extends Controller
         if(!Auth::guard('shop')->attempt($formFields)){
             return $this->error('','email or password is invalid' , 401);
         }
-        $user = Shop::where("email" , $formFields['email'])->first();
+        $shop = Shop::where("email" , $formFields['email'])->first();
 
         return $this->success([
-            'user' => $user,
-            'token' =>$user->createToken('API Token of ' . $user->name)->plainTextToken //for return only plainTextToken without it will return all token record from personal_access_tokens
+            'shop' => $shop,
+            'token' =>$shop->createToken('API Token of ' . $shop->name)->plainTextToken //for return only plainTextToken without it will return all token record from personal_access_tokens
         ]);
 
     }
