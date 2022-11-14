@@ -20,8 +20,7 @@ return new class extends Migration
             $table->integer('Quantity');
             $table->timestamps();
         });
-    }
-
+    }   
     /**
      * Reverse the migrations.
      *

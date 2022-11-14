@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
@@ -19,7 +20,7 @@ class UserProfileController extends Controller
     public function showUserProfile()
     {
         return $this->isUser() ?  new ProfileResource(Auth::user())
-                            : $this->error('','you are unauthorized to reach here',403);
+                                : $this->error('','you are unauthorized to reach here',403);
     }
     public function editUserProfile(Request $request)
     {
@@ -84,4 +85,7 @@ class UserProfileController extends Controller
         return  Auth::user()->id == $order->user_id ? true:false;
 
     }
+
+
+
 }

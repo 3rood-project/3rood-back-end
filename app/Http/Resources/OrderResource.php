@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Resources\deliveryInfoResource;
-use App\Http\Resources\public\ProductResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\user\OrderProductResource;
 
 class OrderResource extends JsonResource
 {
@@ -23,7 +24,7 @@ class OrderResource extends JsonResource
             'orderStatus' => $this->status,
             'created_at' => $this->created_at,
             'deliveryInfo' => new deliveryInfoResource($this->deliveryInfo) ,
-            // 'orderProducts' => new ProductResource($this->products) ,
+            'orderProducts' => OrderProductResource::collection(DB::table('orders_product')->where('order_id', $this->id)->get()) ,
         ];
     }
 }
