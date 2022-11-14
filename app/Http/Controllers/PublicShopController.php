@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Shop;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Http\Resources\ShopResource;
-use App\Http\Resources\ProductResource;
-use App\Http\Resources\CategoryResource;
-use App\Http\Resources\SingleShopResource;
+use App\Http\Resources\public\ShopResource;
+use App\Http\Resources\public\ProductResource;
+use App\Http\Resources\public\CategoryResource;
+use App\Http\Resources\public\SingleShopResource;
 
 class PublicShopController extends Controller
 {
@@ -24,11 +24,10 @@ class PublicShopController extends Controller
     {
         return new SingleShopResource(Shop::where('shop_name' , $name)->first());
     }
-    public function showProductDetails($name,$id)
+    public function showProductDetails( $name,$id)
     {
         $shop =Shop::where('shop_name' , $name)->first();
-        $product =$shop->products->where('id' ,$id)->first();
-        // return($product);
+        $product =$shop->products->find($id);
         return new ProductResource($product);
     }
 }

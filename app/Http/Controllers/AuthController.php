@@ -58,7 +58,7 @@ class AuthController extends Controller
                 'city' => ['required', 'string'],
                 'gender' => ['required', 'string'],
                 'email' => ['required', 'email', 'unique:users'],
-                'phone_number' => ['required', 'min:8'],
+                'phone_number' => ['required', 'min:10'],
                 'password' => 'required|confirmed|regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/',
             ],
             [

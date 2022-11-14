@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PublicShopController;
+use App\Http\Controllers\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +37,11 @@ Route::get('/allShops/{name}', [PublicShopController::class , 'getShop']);
 Route::get('/allShops/{name}/{id}', [PublicShopController::class , 'showProductDetails']);
 
 // --------------------- authenticated routes ------------------
+Route::middleware('auth:sanctum')->group(function (){
+    Route::get('/profile', [UserProfileController::class , 'showUserProfile']);
+    Route::put('/profile/edit', [UserProfileController::class , 'editUserProfile']);
+    Route::put('/userChangePass', [UserProfileController::class , 'changeUserPassword']);
+
+    Route::get('/order/{order}', [UserProfileController::class , 'showUserOrderDetails']);
+}
+);

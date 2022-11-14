@@ -22,7 +22,7 @@ class Order extends Model
     ];
     public function deliveryInfo()
     {
-        return $this->hasOne(DeliveryInfo::class);
+        return $this->belongsTo(DeliveryInfo::class);
     }
 
     public function shop()

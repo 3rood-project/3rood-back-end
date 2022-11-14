@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\public;
 
+use App\Http\Resources\public\ProductResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SingleShopResource extends JsonResource
