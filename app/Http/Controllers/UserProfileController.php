@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Traits\UserCheck;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,7 @@ use App\Http\Resources\user\EditProfileResource;
 
 class UserProfileController extends Controller
 {
-    use HttpResponses;
+    use HttpResponses ,UserCheck;
 
     public function showUserProfile()
     {
@@ -39,14 +40,6 @@ class UserProfileController extends Controller
         Auth::user()->update($formFields);
 
         return $this->success(new EditProfileResource( Auth::user()),'your information update successfully' );
-    }
-
-    public function showUserOrderDetails(Order $order)
-    {
-        if (!$this->isUser()) {
-            return  $this->error('','you are not unauthorized to reach here',403);
-        }
-        return $this->isAuthorized($order) ? new OrderResource($order):$this->error('','you are not unauthorized to reach this order',403);
     }
 
     public function changeUserPassword(Request $request)
@@ -75,15 +68,6 @@ class UserProfileController extends Controller
             return $this->success('','your password update successfully' );
         }
         return $this->error('','incorrect password ',400 );
-    }
-
-    private function isUser(){
-        return (Auth::user()->role == 'admin' || Auth::user()->shop_name) ? false : true;
-    }
-
-    private function isAuthorized($order){
-        return  Auth::user()->id == $order->user_id ? true:false;
-
     }
 
 

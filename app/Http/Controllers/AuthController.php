@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\public\ShopResource;
 
 class AuthController extends Controller
 {
@@ -43,7 +44,7 @@ class AuthController extends Controller
         $shop = Shop::where("email" , $formFields['email'])->first();
 
         return $this->success([
-            'shop' => $shop,
+            'shop' => new ShopResource($shop),
             'token' =>$shop->createToken('API Token of ' . $shop->name)->plainTextToken //for return only plainTextToken without it will return all token record from personal_access_tokens
         ]);
 
@@ -62,8 +63,8 @@ class AuthController extends Controller
                 'password' => 'required|confirmed|regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/',
             ],
             [
-                'password.regex' => 'The password should have minimum eight characters,
-            at least one letter, one number and one special character'
+                'password.regex' => 'The password should have min 8 characters,
+                at least one letter, one number and one special character'
             ]
         );
                 // Hash Password
@@ -103,7 +104,7 @@ class AuthController extends Controller
                 // Create user
                 $shop = Shop::create($formFields);
         return $this->success([
-            'Shop' => $shop,
+            'Shop' =>  new ShopResource($shop),
             'token' =>$shop->createToken('API Token of ' . $shop->name)->plainTextToken //for return only plainTextToken without it will return all token record from personal_access_tokens
         ]);
     }

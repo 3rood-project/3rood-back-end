@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('delivery_info_id')->constrained()->restrictOnDelete();
             $table->double('price',2);
             $table->enum('status' , ['pending' ,'approved' , 'rejected'])->default('pending');
+            $table->enum('stage' , ['preparing ' ,'onDelivery ' , 'delivered'])->default('preparing');// added at 11-25-2022
             $table->softDeletes();
             $table->timestamps();
         });
