@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Shop;
 
-use Illuminate\Support\Facades\DB;
-use App\Http\Resources\deliveryInfoResource;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\user\OrderProductResource;
 
-class OrderResource extends JsonResource
+class ShopOrderResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,13 +16,10 @@ class OrderResource extends JsonResource
     {
         return[
             'order_id' => $this->id,
-            'shopName' => $this->shop->shop_name,
             'total' => $this->price,
             'orderStatus' => $this->status,
             'orderStage' => $this->stage,
             'created_at' => $this->created_at,
-            'deliveryInfo' => new deliveryInfoResource($this->deliveryInfo) ,
-            'orderProducts' => OrderProductResource::collection(DB::table('orders_product')->where('order_id', $this->id)->get()) ,
         ];
     }
 }
