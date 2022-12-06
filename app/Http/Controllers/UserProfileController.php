@@ -33,7 +33,8 @@ class UserProfileController extends Controller
             'last_name' => ['required', 'string'],
             'city' => ['required', 'string'],
             'gender' => ['required', 'string'],
-            'email' => ['required', 'email', 'unique:users'],
+            'birthday' => ['required', 'date'],
+            // 'profile_photo' => ['required', 'string'],
             'phone_number' => ['required', 'min:10'],
         ]);
 

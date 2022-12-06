@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\UserResources;
+use Illuminate\Validation\Rules\Password;
 use App\Http\Resources\public\ShopResource;
 
 class AuthController extends Controller
@@ -17,7 +19,7 @@ class AuthController extends Controller
     {
             $formFields = $request->validate([
             'email' => ['required','string', 'email'],
-            'password' => 'required|string|min:8'
+            'password' => 'required|string'
         ]);
 
         if(!Auth::attempt($formFields)){
@@ -26,7 +28,7 @@ class AuthController extends Controller
         $user = User::where("email" , $formFields['email'])->first();
 
         return $this->success([
-            'user' => $user,
+            'user' => new UserResources($user),
             'token' =>$user->createToken('API Token of ' . $user->name)->plainTextToken //for return only plainTextToken without it will return all token record from personal_access_tokens
         ]);
 
@@ -58,14 +60,17 @@ class AuthController extends Controller
                 'last_name' => ['required', 'string'],
                 'city' => ['required', 'string'],
                 'gender' => ['required', 'string'],
+                // 'profile_photo' => ['required', 'string'],
+                'birthday' => ['required', 'date'],
                 'email' => ['required', 'email', 'unique:users'],
                 'phone_number' => ['required', 'min:10'],
-                'password' => 'required|confirmed|regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/',
+                'password' => ['required','confirmed',Password::defaults()
             ],
-            [
-                'password.regex' => 'The password should have min 8 characters,
-                at least one letter, one number and one special character'
-            ]
+            ],
+            // [
+            //     'password.regex' => 'The password should have min 8 characters,
+            //     at least one letter, one number and one special character'
+            // ]
         );
                 // Hash Password
                 $formFields['password'] = Hash::make($formFields['password']);
@@ -73,7 +78,7 @@ class AuthController extends Controller
                 // Create user
                 $user = User::create($formFields);
         return $this->success([
-            'user' => $user,
+            'user' => new UserResources($user),
             'token' =>$user->createToken('API Token of ' . $user->name)->plainTextToken //for return only plainTextToken without it will return all token record from personal_access_tokens
         ]);
     }

@@ -21,9 +21,11 @@ class ProfileResource extends JsonResource
                 'firstName' => $this->first_name,
                 'lastName' => $this->last_name,
                 'userEmail' => $this->email,
+                'useProfile' => $this->profile_photo,
                 'city' => $this->city,
                 'gender' => $this->gender,
                 'phoneNumber' => $this->phone_number,
+                'birthday' => $this->birthday,
             ],
             'userOrder' => OrderResource::collection($this->orders),
         ];
