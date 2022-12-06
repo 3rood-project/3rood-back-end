@@ -24,6 +24,8 @@ class EditProfileResource extends JsonResource
                 'city' => $this->city,
                 'gender' => $this->gender,
                 'phoneNumber' => $this->phone_number,
+                'profilePhoto' => $this->profile_photo,
+                'birthday' => $this->birthday,
             ]
         ];
     }

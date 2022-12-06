@@ -91,7 +91,7 @@ Route::get('/activeOrder', function () {
 Route::get('/joinUs ', function () {
     return view('shop.shop-signup');
 });
-Route::get('/shop-login ', function () {
+Route::get('/shop-login', function () {
     return view('shop.login');
 });
 Route::get('/addProduct ', function () {

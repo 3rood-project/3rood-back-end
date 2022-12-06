@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->enum('role' ,['admin' , 'user'])->default('user');
+            $table->date('birthday');//  6/12/2022
+            $table->string('profile_photo');//  6/12/2022
             $table->string('city');
             $table->string('gender');
             $table->integer('phone_number');
@@ -26,6 +28,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
         });
     }
 
