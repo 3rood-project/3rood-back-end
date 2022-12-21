@@ -67,10 +67,7 @@ class AuthController extends Controller
                 'password' => ['required','confirmed',Password::defaults()
             ],
             ],
-            // [
-            //     'password.regex' => 'The password should have min 8 characters,
-            //     at least one letter, one number and one special character'
-            // ]
+
         );
                 // Hash Password
                 $formFields['password'] = Hash::make($formFields['password']);
@@ -113,4 +110,13 @@ class AuthController extends Controller
             'token' =>$shop->createToken('API Token of ' . $shop->name)->plainTextToken //for return only plainTextToken without it will return all token record from personal_access_tokens
         ]);
     }
+
+    public function logout()
+    {
+        Auth::user()->currentAccessToken()->delete();
+        return $this->success([
+            'message' => 'your access token has been deleted successfully'
+        ]);
+    }
+
 }

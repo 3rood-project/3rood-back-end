@@ -20,6 +20,7 @@ class ShopOrderResource extends JsonResource
             'orderStatus' => $this->status,
             'orderStage' => $this->stage,
             'created_at' => $this->created_at,
+            'orderOwner' => $this->user->first_name . " " . $this->user->last_name,
         ];
     }
 }

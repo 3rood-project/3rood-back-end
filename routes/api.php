@@ -32,7 +32,8 @@ Route::post('/userRegister',                [AuthController::class , 'userRegist
 // login and register for shop
 Route::post('/shopLogin',                   [AuthController::class , 'shopLogin']);
 Route::post('/shopRegister',                [AuthController::class , 'shopRegister']);
-
+//logout
+Route::delete('/logout',                      [AuthController::class , 'logout']);
 // get all shops
 Route::get('/allShops',                     [PublicShopController::class , 'getAllShops']);
 Route::get('/allCategory',                  [PublicShopController::class , 'getAllCategories']);
@@ -63,6 +64,6 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::delete('/shop/{product}',        [ShopController::class , 'deleteOffer']);
     //shop profile
     Route::put('/shopChangePass',           [ShopProfileController::class , 'changeShopPassword']);
-    Route::get('/shop/profile/{shop}',      [ShopProfileController::class , 'viewShopProfile']);
+    Route::get('/shop/profile',             [ShopProfileController::class , 'viewShopProfile']);
 
 });

@@ -17,10 +17,9 @@ class UserOrderController extends Controller
 
     public function showUserOrderDetails(Order $order)
     {
-        if (!$this->isUser()) {
-            return  $this->error('','you are not unauthorized to reach here',403);
-        }
-        return $this->isAuthorized($order) ? new OrderResource($order):$this->error('','you are not unauthorized to reach this order',403);
+       if(Auth::user()->id === $order->user->id || Auth::user()->id ===$order->shop->id ){
+        return new OrderResource($order);
+       }else return $this->error('','you are not unauthorized to reach this order',403);
     }
 
     public function placeOrder(Request $request)
@@ -41,7 +40,7 @@ class UserOrderController extends Controller
                 'Quantity' => $product["quantity"]
             ]);
         }
-        
+
         return $this->success( new OrderResource($newOrder),'order created successfully',201);
     }
 }
