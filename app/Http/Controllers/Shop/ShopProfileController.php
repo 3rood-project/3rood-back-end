@@ -42,8 +42,9 @@ class ShopProfileController extends Controller
         return $this->error('','incorrect password ',400 );
     }
 
-    public function viewShopProfile(Shop $shop)
+    public function viewShopProfile()
     {
-    return !$this->isShop() || Auth::user()->id == $shop->id ? new ShopProfileResource(Auth::user()): $this->error('','you are unauthorized to reach here',403);
+
+    return !$this->isShop()  ? $this->error('','you are unauthorized to reach here',403): new ShopProfileResource(Auth::user()) ;
     }
 }
