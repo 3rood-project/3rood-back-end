@@ -60,7 +60,7 @@ class AuthController extends Controller
                 'last_name' => ['required', 'string'],
                 'city' => ['required', 'string'],
                 'gender' => ['required', 'string'],
-                // 'profile_photo' => ['required', 'string'],
+                'profile_photo' => ['required', 'string'],
                 'birthday' => ['required', 'date'],
                 'email' => ['required', 'email', 'unique:users'],
                 'phone_number' => ['required', 'min:10'],
@@ -73,7 +73,8 @@ class AuthController extends Controller
                 $formFields['password'] = Hash::make($formFields['password']);
 
                 // Create user
-                $user = User::create($formFields);
+                User::create($formFields);
+                $user = User::where("email" , $formFields['email'])->first();
         return $this->success([
             'user' => new UserResources($user),
             'token' =>$user->createToken('API Token of ' . $user->name)->plainTextToken //for return only plainTextToken without it will return all token record from personal_access_tokens
@@ -83,12 +84,12 @@ class AuthController extends Controller
     {
         $formFields = $request->validate(
             [
-                'shop_name' => ['required', 'string','max:255'],
+                'shop_name' => ['required', 'string','max:255','unique:shops'],
                 'city' => ['required', 'string'],
                 'address' => ['required', 'string'],
-                'email' => ['required', 'email', 'unique:users'],
+                'email' => ['required', 'email', 'unique:shops'],
                 'phone_number' => ['required', 'min:10' ],
-                'wallet_account' => ['required', 'min:10'],
+                'wallet_account' => ['required', 'min:10', 'unique:shops'],
                 'open_time' => ['required'],
                 'category_id' => ['required'],
                 'close_time' => ['required'],
@@ -106,11 +107,52 @@ class AuthController extends Controller
                 // Create user
                 $shop = Shop::create($formFields);
         return $this->success([
-            'Shop' =>  new ShopResource($shop),
+            'shop' =>  new ShopResource($shop),
             'token' =>$shop->createToken('API Token of ' . $shop->name)->plainTextToken //for return only plainTextToken without it will return all token record from personal_access_tokens
         ]);
     }
 
+    public function userRegisterGoogle(Request $request)
+    {
+        $userCheck = User::where('email', $request->email)->first();
+        if ($userCheck) {
+            return $this->error('','this email is already exist' , 401);
+        }
+
+        $formFields = $request->validate(
+            [
+                'first_name' => ['required', 'string'],
+                'last_name' => ['required', 'string'],
+                'profile_photo' => ['required', 'string'],
+                'email' => ['required', 'email', 'unique:users'],
+
+                'google_id' => ['required' ],
+            ]
+        );
+
+
+        // Create user
+        $user = User::create($formFields);
+
+        return $this->success([
+            'user' => new UserResources(User::where('email', $user->email)->first()),
+            'token' => $user->createToken('API Token of ' . $user->name)->plainTextToken //for return only plainTextToken without it will return all token record from personal_access_tokens
+
+        ]);
+    }
+    public function userLoginGoogle(Request $request){
+        $user  = User::where('email', $request->email)->where('google_id',$request->google_id)->first();
+        if ($user ) {
+            return $this->success([
+                'user' => new UserResources($user),
+                'token' =>$user->createToken('API Token of ' . $user->name)->plainTextToken
+            ]);
+        }else {
+            return $this->error('','invalid email ' , 401);
+
+        }
+
+}
     public function logout()
     {
         Auth::user()->currentAccessToken()->delete();

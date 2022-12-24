@@ -32,16 +32,19 @@ Route::post('/userRegister',                [AuthController::class , 'userRegist
 // login and register for shop
 Route::post('/shopLogin',                   [AuthController::class , 'shopLogin']);
 Route::post('/shopRegister',                [AuthController::class , 'shopRegister']);
+// google login and register  for user
+Route::post('/userRegisterGoogle',          [AuthController::class , 'userRegisterGoogle']);
+Route::post('/userLoginGoogle',             [AuthController::class , 'userLoginGoogle']);
 //logout
-Route::delete('/logout',                      [AuthController::class , 'logout']);
+Route::delete('/logout',                    [AuthController::class , 'logout']);
 // get all shops
 Route::get('/allShops',                     [PublicShopController::class , 'getAllShops']);
 Route::get('/allCategory',                  [PublicShopController::class , 'getAllCategories']);
 Route::get('/allShops/{name}',              [PublicShopController::class , 'getShop']);
 Route::get('/allShops/{name}/{id}',         [PublicShopController::class , 'showProductDetails']);
 // newsLatter & contact
-Route::post('/contact'  ,                    [PublicShopController::class , 'storeContactMessage']);
-Route::post('/newsLatter'  ,                 [PublicShopController::class , 'storeNewsLatterMessage']);
+Route::post('/contact'  ,                   [PublicShopController::class , 'storeContactMessage']);
+Route::post('/newsLatter'  ,                [PublicShopController::class , 'storeNewsLatterMessage']);
 // --------------------- user authenticated routes ------------------
 Route::middleware('auth:sanctum')->group(function (){
     // user profile
@@ -58,7 +61,7 @@ Route::middleware('auth:sanctum')->group(function (){
 Route::middleware('auth:sanctum')->group(function (){
     Route::put('/approve/{order}',          [ShopController::class , 'approveOrder']);
     Route::put('/reject/{order}',           [ShopController::class , 'rejectOrder']);
-    Route::put('/stage/{order}',            [ShopController::class , 'changeOrderStage']);
+    Route::post('/stage/{order}',           [ShopController::class , 'changeOrderStage']);
     Route::post('/shop/addOffer',           [ShopController::class , 'addNewOffer']);
     Route::PUT('/shop/editOffer/{product}', [ShopController::class , 'editOffer']);
     Route::delete('/shop/{product}',        [ShopController::class , 'deleteOffer']);
