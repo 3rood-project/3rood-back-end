@@ -19,8 +19,9 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained()->restrictOnDelete();
             $table->integer('Quantity');
             $table->timestamps();
+            $table->softDeletes();//24/12/2022
         });
-    }   
+    }
     /**
      * Reverse the migrations.
      *

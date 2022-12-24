@@ -40,9 +40,10 @@ class ShopController extends Controller
         if (!$this->isShopAuthorized($order) || !$this->isShop()) {
             return $this->error('','you are not unauthorized to reach here',403);
         }
+        // dd($request);
         $order->stage = $request->change_stage;
         $order->save();
-        return $this->success('','The order stage change successfully');
+        return $this->success([ $request->change_stage],'The order stage change successfully');
     }
 
     public function editOffer(Product $product, Request $request)

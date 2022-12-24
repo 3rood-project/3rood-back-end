@@ -15,11 +15,12 @@ class OrderProductResource extends JsonResource
      */
     public function toArray($request)
     {
-        $project = Product::find($this->product_id);
+        $product = Product::find($this->product_id);
         return [
-            'productName'   =>  $project->name ,
-            'productPrice'  =>  $project->price ,
+            'productName'   =>  $product->name ,
+            'productPrice'  =>  $product->price ,
             'Quantity'      => $this->Quantity	,
-        ];    
+            'productPhoto'  => $product->product_photo	,
+        ];
     }
 }

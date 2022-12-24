@@ -7,11 +7,12 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\DeliveryInfo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes ;
 
     protected $fillable = [
         'user_id',
