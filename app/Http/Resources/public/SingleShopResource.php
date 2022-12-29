@@ -24,6 +24,7 @@ class SingleShopResource extends JsonResource
                 'openTime' => $this->open_time,
                 'closeTime' => $this->close_time,
                 'ProfilePhoto' => $this->profile_photo,
+                'shopPhone' => $this->phone_number,
             ],
             'shop_products' => ProductResource::collection($this->products)
         ];    }

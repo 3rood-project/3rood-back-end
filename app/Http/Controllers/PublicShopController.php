@@ -18,7 +18,7 @@ class PublicShopController extends Controller
     use HttpResponses ;
     public function getAllShops(Request $request)
     {
-        return ShopResource::collection(Shop::all());
+        return ShopResource::collection(Shop::all()->where('status','approved'));
     }
 
     public function getAllCategories(Request $request)

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\OrderResource;
+use App\Http\Resources\UserResources;
 use App\Http\Resources\user\ProfileResource;
 use App\Http\Resources\user\EditProfileResource;
 
@@ -34,13 +35,13 @@ class UserProfileController extends Controller
             'city' => ['required', 'string'],
             'gender' => ['required', 'string'],
             'birthday' => ['required', 'date'],
-            // 'profile_photo' => ['required', 'string'],
+            'profile_photo' => ['required', 'string'],
             'phone_number' => ['required', 'min:10'],
         ]);
 
         Auth::user()->update($formFields);
 
-        return $this->success(new EditProfileResource( Auth::user()),'your information update successfully' );
+        return $this->success(new UserResources( Auth::user()),'your information update successfully' );
     }
 
     public function changeUserPassword(Request $request)

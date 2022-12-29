@@ -25,6 +25,7 @@ return new class extends Migration
             $table->time('open_time');
             $table->time('close_time');
             $table->string('address');
+            $table->enum('status' , ['pending' ,'approved' , 'rejected'])->default('pending');//for admin dashboard
             $table->foreignId('category_id')->constrained()->restrictOnDelete();
             $table->softDeletes();
             $table->rememberToken();

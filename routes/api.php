@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Shop\ShopController;
 use App\Http\Controllers\UserOrderController;
 use App\Http\Controllers\PublicShopController;
@@ -69,4 +70,14 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::put('/shopChangePass',           [ShopProfileController::class , 'changeShopPassword']);
     Route::get('/shop/profile',             [ShopProfileController::class , 'viewShopProfile']);
 
+});
+// ---------------------admin authenticated routes ------------------
+Route::middleware('auth:sanctum')->group(function (){
+    Route::get('/statistics',              [AdminController::class , 'statistics']);
+    Route::get('/users',                   [AdminController::class , 'users']);
+    Route::post('/changeRole/{user}',      [AdminController::class , 'changeRole']);
+    Route::delete('/deleteUser/{user}',    [AdminController::class , 'removeUser']);
+
+    Route::get('/shopsRequest',            [AdminController::class , 'shopsRequest']);
+    Route::put('/changeStatus/{shop}',     [AdminController::class , 'shopChangeStatus']);
 });
