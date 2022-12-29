@@ -80,4 +80,11 @@ Route::middleware('auth:sanctum')->group(function (){
 
     Route::get('/shopsRequest',            [AdminController::class , 'shopsRequest']);
     Route::put('/changeStatus/{shop}',     [AdminController::class , 'shopChangeStatus']);
+    Route::get('/allShopsControl',         [AdminController::class , 'allShopsControl']);
+    Route::delete('/shopDelete/{shop}',    [AdminController::class , 'deleteShop']);
+    Route::get('/allProducts',             [AdminController::class , 'getAllProduct']);
+    Route::delete('/deleteProducts/{product}',[AdminController::class , 'removeProduct']);
+    Route::get('/allMessages',             [AdminController::class , 'getMessages']);
+    Route::get('/allOrders',               [AdminController::class , 'getOrders']);
+    Route::delete('/order/{order}',        [AdminController::class , 'removeOrder']);
 });

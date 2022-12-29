@@ -7,7 +7,7 @@ use App\Http\Resources\deliveryInfoResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\user\OrderProductResource;
 
-class OrderResource extends JsonResource
+class AdminOrderResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,10 @@ class OrderResource extends JsonResource
      */
     public function toArray($request)
     {
+
          return[
             'order_id' => $this->id,
-            'shopName' => $this->shop->shop_name,
+            'shopName' => $this->shop->shop_name ,
             'total' => $this->price,
             'orderStatus' => $this->status,
             'orderStage' => $this->stage,
