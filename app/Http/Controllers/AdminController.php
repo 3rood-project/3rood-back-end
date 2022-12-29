@@ -10,7 +10,10 @@ use App\Models\Product;
 use App\Traits\UserCheck;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
+use App\Http\Resources\OrderResource;
 use App\Http\Resources\UserResources;
+use App\Http\Resources\AdminOrderResource;
+use App\Http\Resources\public\ProductResource;
 use App\Http\Resources\public\SingleShopResource;
 
 class AdminController extends Controller
@@ -36,6 +39,33 @@ class AdminController extends Controller
         $user->role = $request->role;
         $user->save();
         return $this->success('',"user's role changed successfully");
+    }
+    public function deleteShop(Request $request,Shop $shop)
+    {
+        if (!$this->isAdmin()) {
+            return $this->error('','you are unauthorized to reach here',403);
+        }
+        $shop->delete();
+        return $this->success('',"user  deleted successfully");
+    }
+    public function removeProduct(Request $request,Product $product)
+    {
+        if (!$this->isAdmin()) {
+            return $this->error('','you are unauthorized to reach here',403);
+        }
+
+        $product->delete();
+
+        return $this->success('',"user  deleted successfully");
+    }
+    public function removeOrder(Request $request,Order $order)
+    {
+        if (!$this->isAdmin()) {
+            return $this->error('','you are unauthorized to reach here',403);
+        }
+        $order->status = 'canceled';
+        $order->save();
+        return $this->success('',"order  canceled successfully");
     }
     public function removeUser(Request $request,User $user)
     {
@@ -65,6 +95,28 @@ class AdminController extends Controller
         return $this->isAdmin() ? $this->success(
              SingleShopResource::collection(Shop::all()->where('status','pending'))
 
+        ):$this->error('','you are unauthorized to reach here',403);
+    }
+    public function allShopsControl()
+    {
+        return $this->isAdmin() ? $this->success(
+              SingleShopResource::collection(Shop::all()->where('status','approved'))  ,
+
+        ):$this->error('','you are unauthorized to reach here',403);
+    }
+    public function getMessages()
+    {
+        return $this->isAdmin() ? $this->success(Contact::all()):$this->error('','you are unauthorized to reach here',403);
+    }
+    public function getOrders()
+    {
+        return $this->isAdmin() ? $this->success( AdminOrderResource::collection(Order::all())):$this->error('','you are unauthorized to reach here',403);
+    }
+    public function getAllProduct()
+    {
+
+        return $this->isAdmin() ? $this->success(
+            ProductResource::collection(Product::all())
         ):$this->error('','you are unauthorized to reach here',403);
     }
     public function users()
