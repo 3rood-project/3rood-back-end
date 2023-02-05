@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
 use App\Traits\UserCheck;
 use App\Models\DeliveryInfo;
 use Illuminate\Http\Request;
@@ -24,6 +25,13 @@ class UserOrderController extends Controller
 
     public function placeOrder(Request $request)
     {
+        foreach ($request->productsForOrder as  $product) {
+            $currentProduct =Product::find($product['productId']);
+            if ($currentProduct->Quantity < $product["quantity"] ) {
+                return $this->error("", "the product Quantity is larger than exist" ,400);
+            }
+        }
+
         $orderDeliveryInfo = DeliveryInfo::create($request->deliveryInfo);
 
         $newOrder = Order::create([
@@ -39,6 +47,9 @@ class UserOrderController extends Controller
                 'product_id' => $product['productId'],
                 'Quantity' => $product["quantity"]
             ]);
+            $currentProduct =Product::find($product['productId']);
+            $currentProduct->Quantity = $currentProduct->Quantity - $product["quantity"];
+            $currentProduct->save();
         }
 
         return $this->success( new OrderResource($newOrder),'order created successfully',201);

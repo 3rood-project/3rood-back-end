@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('orders_product', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained()->restrictOnDelete();
-            $table->foreignId('product_id')->constrained()->restrictOnDelete();
+            $table->foreignId('order_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer('Quantity');
             $table->timestamps();
             $table->softDeletes();//24/12/2022

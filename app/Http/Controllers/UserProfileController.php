@@ -35,10 +35,12 @@ class UserProfileController extends Controller
             'city' => ['required', 'string'],
             'gender' => ['required', 'string'],
             'birthday' => ['required', 'date'],
-            'profile_photo' => ['required', 'string'],
+            // 'profile_photo' => ['required', 'string'],
             'phone_number' => ['required', 'min:10'],
         ]);
-
+        if ($request->profile_photo) {
+            Auth::user()->update(['profile_photo'=>$request->profile_photo]);
+        }
         Auth::user()->update($formFields);
 
         return $this->success(new UserResources( Auth::user()),'your information update successfully' );
